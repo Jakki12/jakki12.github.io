@@ -15,13 +15,24 @@
   <meta name="msapplication-TileColor" content="#FFFFFF">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body class="fullscreen">
-  <div class="container">
-    <h1 class="title">Hello World!</h1>
-  </div>
-  <script src="js/main.js"></script>
+<body class="myFullscreen">
+    <svg height="100%" width="100%">
+        <circle id="mycircle" cx="50" cy="100" r="40" stroke="black" stroke-width="30" fill="yellow" onclick="moveOnRepeat()"/>
+        <circle id="mycircle2" cx="50" cy="200" r="40" stroke="red" stroke-width="20" fill="white" onclick="moveOnRepeat2()"/>
+    </svg>
+    <script src="js/main.js"></script>
 </body>
 </html>
 
 
-
+<!--
+<body class="myFullscreen">
+    <div class="myDiv">
+        <svg width="500px">
+            <circle id="circle" cx="10px" cy="10px" r="30px" onclick="moveit()" />
+        </svg>
+    </div>
+  <script src="js/main.js"></script>
+</body>
+</html>
+-->

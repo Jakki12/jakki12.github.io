@@ -4,20 +4,27 @@ body {
 
 /* Make content area fill the entire browser window */
 html,
-.fullscreen {
+.myFullscreen {
   display: flex;
   height: 100%;
   margin: 0;
   padding: 0;
   width: 100%;
+  align-content: center
 }
+
+
+
+
 
 /* Center the content in the browser window */
-.container {
+/*
+.myDiv {
   margin: auto;
-  text-align: center;
-}
+ background-color: green; 
+ height: 200px;
+ width: 200px;
+ text-align: center;
+}*/
 
-.title {
-  font-size: 3rem;
-}
+
