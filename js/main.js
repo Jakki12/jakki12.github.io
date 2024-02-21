@@ -16,12 +16,14 @@ function moveOnRepeat() {
 }
 
 function moveit() {
+    var circle_elem = document.getElementById("mycircle");
     var xpos = document.getElementById("mycircle").cx.baseVal.value;
-    console.log(xpos);
+    var circle_width = circle_elem.getBoundingClientRect().width;
     
-    if(xpos >= 100)
+    
+    if(!elementRightBorderCheck(circle_elem))
     {
-        xpos = 0;      
+        xpos = -circle_width;      
     }
     else
     {
@@ -36,15 +38,17 @@ function moveit() {
 
 
 function moveOnRepeat2() {
-  setInterval(moveit2, 80);
+  setInterval(moveit2, 10);
 }
 function moveit2() {
+   
+    var circle_elem = document.getElementById("mycircle2");
     var xpos = document.getElementById("mycircle2").cx.baseVal.value;
-    console.log(xpos);
+    var circle_width = circle_elem.getBoundingClientRect().width;
     
-    if(xpos >= 300)
+    if(!elementRightBorderCheck(circle_elem))
     {
-        xpos = 0;      
+        xpos = -circle_width;      
     }
     else
     {
@@ -56,3 +60,17 @@ function moveit2() {
 };
 
 
+function elementRightBorderCheck(element) {
+
+    var bounding = element.getBoundingClientRect();
+    
+    var elemWidth = bounding.width;
+  
+
+    if (bounding.right <= ((window.innerWidth+elemWidth) || (document.documentElement.clientWidth+elemWidth)))
+    {
+        return true;
+    } else {
+        return false;
+    }
+}
