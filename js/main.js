@@ -1,13 +1,58 @@
+//import * as Tone from 'tone'
+
+
+
 window.onload = () => {
   'use strict';
+
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker
              .register('./sw.js');
   }
+    
+moveOnRepeat();
+moveOnRepeat2();
+  
 }
 
 
+
+
+    
+    
+
+function onCircleClick(){
+    playTone();
+    
+}
+
+function playTone(){
+    const synth = new Tone.Synth().toDestination();
+    if (Tone.context.state !== "running")
+    {
+    Tone.start();
+    }
+    synth.triggerAttackRelease("C4", "8n");   
+}
+
+function onCircleClick2(){
+    playTone2();
+}
+
+function playTone2(){
+    var synth = new Tone.Synth().toDestination();
+    if (Tone.context.state !== "running")
+    {
+    Tone.start();
+    }
+    synth.triggerAttackRelease("C5", "16n");   
+}
+
+
+
+
+//moving the circles
 
 let intervalID;
 
@@ -33,7 +78,6 @@ function moveit() {
     document.getElementById("mycircle").cx.baseVal.value = xpos;
     
 };
-
 
 
 
@@ -74,3 +118,7 @@ function elementRightBorderCheck(element) {
         return false;
     }
 }
+
+
+
+
