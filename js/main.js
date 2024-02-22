@@ -1,6 +1,3 @@
-//import * as Tone from 'tone'
-
-
 
 window.onload = () => {
   'use strict';
@@ -16,11 +13,23 @@ moveOnRepeat2();
   
 }
 
+//onMount
+document.addEventListener("DOMContentLoaded", function () {
+// let btnUp = document.getElementById("click-up");
+// let btnDwn = document.getElementById("click-down");
+// clickAndHold(btnUp);
+// clickAndHold(btnDwn);
 
+//register circles for click-and-press-checking-routine
+		
+		
+let cir3 = document.getElementById("mycircle3");
+clickAndHold(cir3);
+		
 
+});
 
-    
-    
+   
 
 function onCircleClick(){
     playTone();
@@ -36,6 +45,8 @@ function playTone(){
     synth.triggerAttackRelease("C4", "8n");   
 }
 
+
+
 function onCircleClick2(){
     playTone2();
 }
@@ -46,8 +57,24 @@ function playTone2(){
     {
     Tone.start();
     }
-    synth.triggerAttackRelease("C5", "16n");   
+    synth.triggerAttackRelease("C5", "16n"); 
 }
+
+
+
+function onCircleClick3(){
+	
+	
+	let cir3 = document.getElementById('mycircle3'); 
+  //console.log(g.attributes)
+	//g.setAttribute("r", radius+3);
+	let strwdt = Number(cir3.getAttribute("stroke-width"));
+	
+	cir3.setAttribute("stroke-width", strwdt+3);
+	
+	
+	
+};
 
 
 
@@ -120,5 +147,78 @@ function elementRightBorderCheck(element) {
 }
 
 
+//This function clicks a dedicated btn-element programmatically as long as it is pressed.
+//By this, the HTML-onClick() function will continously be fired as long as the element is held.
 
+function clickAndHold(svgElement){
+ 
+ let timerId;
+ const DURATION = 20;
+
+ //handle when clicking down
+ const onMouseDown = () =>
+ {
+  timerId = setInterval(() =>
+  {	
+		//for buttons use: svgElement.click();
+		//for svg-circles, we use: dispatchEvent()....
+    svgElement && svgElement.dispatchEvent(new Event('click'));
+  }, DURATION);
+ };
+
+ //stop or clear interval
+ const clearTimer = () =>
+ {
+   timerId && clearInterval(timerId);
+ };
+
+ //handle when mouse is clicked -> rufe unsere eigene onMouseDown-Routine auf
+ svgElement.addEventListener("mousedown", onMouseDown);
+ //handle when mouse is raised ->rufe unsere eigene clearTimer-Routine auf
+ svgElement.addEventListener("mouseup", clearTimer);
+ //handle mouse leaving the clicked button
+ svgElement.addEventListener("mouseout", clearTimer);
+
+ // a callback function to remove listeners useful in libs like react
+ // when component or element is unmounted
+ return () =>
+ {
+   svgElement.removeEventListener("mousedown", onMouseDown);
+   svgElement.removeEventListener("mouseup", clearTimer);
+   svgElement.removeEventListener("mouseout", clearTimer);
+ };
+};
+
+
+
+
+
+
+
+
+
+/////////Stuff for later 
+
+
+
+      let counterUp = 0;
+      let counterDown = 0;
+      //Now you can just listen to the click event will keep trigerring while you hold down the button
+      const clickUp = () => {
+        console.log("in function clickup");
+        counterDown = 0;
+        counterUp++;
+        document.getElementById(
+          "display-one"
+        ).innerHTML = `Button Clicked Up: ${counterUp}`;
+      };
+
+      const clickDown = () => {
+        counterUp = 0;
+        counterDown++;
+        document.getElementById(
+          "display-two"
+        ).innerHTML = `Button Clicked Down: ${counterDown}`;
+      };
+ 
 
