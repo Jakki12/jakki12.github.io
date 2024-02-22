@@ -18,10 +18,8 @@ window.onload = () => {
     
 moveOnRepeat();
 moveOnRepeat2();
-	
-//anfängliche stroke-width der kreise
+moveOnRepeat3();
 
-  
 }
 
 //onMount
@@ -71,15 +69,6 @@ function playTone2(){
     synth.triggerAttackRelease("C5", "16n"); 
 }
 
-function playTone3(){
-	var synth = new Tone.Synth().toDestination();
-  
-	if (Tone.context.state !== "running")
-  {
-    Tone.start();
-  }
-  synth.triggerAttackRelease("E4", "4n"); 
-}
 
 
 
@@ -96,9 +85,7 @@ function wasClick(TimeThatCircleWasPressed)
 	}
 }
 	
-	//
-	
-//
+
 
 function onCircleClick3(){
 	if(!doOffAnimation)
@@ -111,6 +98,7 @@ function onCircleClick3(){
 		//playTone je nach farbe,geschwindikeit was auch immer kurz oder lang oder hoch oder tief
 		//TODO
 		
+		playTone3();
 		
 		//entscheide je nach press oder click, ob delay oder nicht oder irgendwein anderer effekt
 		//TODO
@@ -148,19 +136,17 @@ function onAnimation3(maxStrokeWidth){
 
 
 function offAnimation3() {
-	console.log("in off animation");
+	//console.log("in off animation");
 	
 	let kreis3 = document.getElementById('mycircle3'); 
-	
-	let timer = setInterval(function() {
-		
+	let timer = setInterval(function()
+	{
 		let strokeWidth = Number(kreis3.getAttribute("stroke-width"));
 		console.log("current stroke width " + strokeWidth);
-		
-		
+
 		if (strokeWidth <= startingStrWidth3)
 		{
-			console.log("stop");
+			//console.log("stop");
 			clearInterval(timer);
 			return;
 		}
@@ -168,9 +154,20 @@ function offAnimation3() {
 		{
 			kreis3.setAttribute("stroke-width", strokeWidth-3);
 		}
-	
 	}, 20);	
 }
+
+
+function playTone3(){
+	var synth = new Tone.Synth().toDestination();
+  
+	if (Tone.context.state !== "running")
+  {
+    Tone.start();
+  }
+  synth.triggerAttackRelease("E4", "4n"); 
+}
+
 													 
 
 
@@ -223,6 +220,27 @@ function moveit2() {
     
     document.getElementById("mycircle2").cx.baseVal.value = xpos;
     
+};
+
+
+function moveOnRepeat3() {
+  setInterval(moveit3, 13);
+}
+function moveit3() {
+	var circle_elem = document.getElementById("mycircle3");
+  var xpos = document.getElementById("mycircle3").cx.baseVal.value;
+  var circle_width = circle_elem.getBoundingClientRect().width;
+    
+  if(!elementRightBorderCheck(circle_elem))
+  {
+  	xpos = -circle_width;      
+  }
+  else
+  {
+  	xpos += 1;   
+  } 
+  
+	document.getElementById("mycircle3").cx.baseVal.value = xpos;  
 };
 
 
