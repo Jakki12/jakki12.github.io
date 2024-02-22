@@ -1,4 +1,12 @@
 
+
+var startingStrWidth3 = Number(document.getElementById('mycircle3').getAttribute("stroke-width")); 
+
+
+
+
+
+
 window.onload = () => {
   'use strict';
 
@@ -10,6 +18,9 @@ window.onload = () => {
     
 moveOnRepeat();
 moveOnRepeat2();
+	
+//anfängliche stroke-width der kreise
+
   
 }
 
@@ -60,23 +71,107 @@ function playTone2(){
     synth.triggerAttackRelease("C5", "16n"); 
 }
 
+function playTone3(){
+	var synth = new Tone.Synth().toDestination();
+  
+	if (Tone.context.state !== "running")
+  {
+    Tone.start();
+  }
+  synth.triggerAttackRelease("E4", "4n"); 
+}
 
+
+
+
+function wasClick(TimeThatCircleWasPressed)
+{
+	if(TimeThatCircleWasPressed <= 10)
+	{
+	return true;
+	}
+	else
+	{
+	return false;
+	}
+}
+	
+	//
+	
+//
 
 function onCircleClick3(){
-	
-	
+	if(!doOffAnimation)
+	{
+		onAnimation3(100);
+	}
+	else
+	{
+		
+		//playTone je nach farbe,geschwindikeit was auch immer kurz oder lang oder hoch oder tief
+		//TODO
+		
+		
+		//entscheide je nach press oder click, ob delay oder nicht oder irgendwein anderer effekt
+		//TODO
+		
+		
+		
+		//mache off animation ebenfalls je nach delay,reverb, press time was auch immer
+		
+		console.log("mache off animation");
+		offAnimation3();
+		
+	}
+}
+
+
+
+function onAnimation3(maxStrokeWidth){
+	console.log("in on animation");
 	let cir3 = document.getElementById('mycircle3'); 
   //console.log(g.attributes)
 	//g.setAttribute("r", radius+3);
-	let strwdt = Number(cir3.getAttribute("stroke-width"));
-	
-	cir3.setAttribute("stroke-width", strwdt+3);
-	
-	
-	
-};
+	let strWidth = Number(cir3.getAttribute("stroke-width"));
+	if (strWidth <= maxStrokeWidth) //todo: 80 dynamisch festlegen mit anfänglicher stroke-width
+	{
+		cir3.setAttribute("stroke-width", strWidth+3);
+		//were still animating
+		return true;
+	}
+	else
+	{
+		//on Animation has finished
+		return false;	
+	}
+}
 
 
+function offAnimation3() {
+	console.log("in off animation");
+	
+	let kreis3 = document.getElementById('mycircle3'); 
+	
+	let timer = setInterval(function() {
+		
+		let strokeWidth = Number(kreis3.getAttribute("stroke-width"));
+		console.log("current stroke width " + strokeWidth);
+		
+		
+		if (strokeWidth <= startingStrWidth3)
+		{
+			console.log("stop");
+			clearInterval(timer);
+			return;
+		}
+		else
+		{
+			kreis3.setAttribute("stroke-width", strokeWidth-3);
+		}
+	
+	}, 20);	
+}
+													 
 
 
 //moving the circles
@@ -150,6 +245,14 @@ function elementRightBorderCheck(element) {
 //This function clicks a dedicated btn-element programmatically as long as it is pressed.
 //By this, the HTML-onClick() function will continously be fired as long as the element is held.
 
+
+
+
+
+var pressedTime = 0;
+var clickOrHold = 0;
+var doOffAnimation = false;
+
 function clickAndHold(svgElement){
  
  let timerId;
@@ -158,11 +261,14 @@ function clickAndHold(svgElement){
  //handle when clicking down
  const onMouseDown = () =>
  {
+	pressedTime = 0;
+	doOffAnimation = false;
+	 
   timerId = setInterval(() =>
   {	
 		//for buttons use: svgElement.click();
 		//for svg-circles, we use: dispatchEvent()....
-    svgElement && svgElement.dispatchEvent(new Event('click'));
+    svgElement && svgElement.dispatchEvent(new Event('click')) && pressedTime++;
   }, DURATION);
  };
 
@@ -170,7 +276,12 @@ function clickAndHold(svgElement){
  const clearTimer = () =>
  {
    timerId && clearInterval(timerId);
+	 clickOrHold = wasClick(pressedTime);
+	 doOffAnimation = true;
+	 console.log(clickOrHold);
+	 
  };
+	
 
  //handle when mouse is clicked -> rufe unsere eigene onMouseDown-Routine auf
  svgElement.addEventListener("mousedown", onMouseDown);
