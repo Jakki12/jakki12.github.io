@@ -92,6 +92,8 @@ function wasClick(TimeThatCircleWasPressed)
 
 
 function onCircleClick3(){
+	
+	debugWin.value += '\nin on click';
 	if(!doOffAnimation)
 	{
 		onAnimation3(100);
