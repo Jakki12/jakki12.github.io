@@ -4,7 +4,7 @@ var startingStrWidth3 = Number(document.getElementById('mycircle3').getAttribute
 
 
 //debug window
-var debugWin = document.getElementById('logArea');
+//var debugWin = document.getElementById('logArea');
 
 
 
@@ -23,7 +23,7 @@ moveOnRepeat2();
 moveOnRepeat3();
 
 	
-init();
+//init();
 }
 
 //onMount
@@ -93,7 +93,7 @@ function wasClick(TimeThatCircleWasPressed)
 
 function onCircleClick3(){
 	
-	debugWin.value += '\nin on click';
+	//debugWin.value += '\nin on click';
 	if(!doOffAnimation)
 	{
 		onAnimation3(100);
@@ -103,7 +103,7 @@ function onCircleClick3(){
 		
 		//playTone je nach farbe,geschwindikeit was auch immer kurz oder lang oder hoch oder tief
 		//TODO
-		
+		//debugWin.value += '\nshould play tone';
 		playTone3();
 		
 		//entscheide je nach press oder click, ob delay oder nicht oder irgendwein anderer effekt
@@ -322,15 +322,7 @@ function clickAndHold(svgElement){
    svgElement.removeEventListener("mouseup", clearTimer);
    svgElement.removeEventListener("mouseout", clearTimer);
  };
-	
-	
-	
-	
-	// Register touch event handlers
-svgElement.addEventListener("touchstart", process_touchstart, false);
-svgElement.addEventListener("touchmove", process_touchmove, false);
-svgElement.addEventListener("touchcancel", process_touchcancel, false);
-svgElement.addEventListener("touchend", process_touchend, false);
+
 
 };
 
@@ -371,36 +363,36 @@ svgElement.addEventListener("touchend", process_touchend, false);
 
 
 //learning pointer touch
-
-function over_handler(event) {}
-function enter_handler(event) {}
-function down_handler(event) {
-console.log("in down handler");
-	debugWin.value += '\nin down handler';
-}
-function move_handler(event) {}
-function up_handler(event) {}
-function cancel_handler(event) {}
-function out_handler(event) {}
-function leave_handler(event) {}
-function rawupdate_handler(event) {}
-function gotcapture_handler(event) {}
-function lostcapture_handler(event) {}
-
-
-
-function init() {
-      const el = document.getElementById("target");
-      // Register pointer event handlers
-      el.onpointerover = over_handler;
-      el.onpointerenter = enter_handler;
-      el.onpointerdown = down_handler;
-      el.onpointermove = move_handler;
-      el.onpointerup = up_handler;
-      el.onpointercancel = cancel_handler;
-      el.onpointerout = out_handler;
-      el.onpointerleave = leave_handler;
-      el.onpointerrawupdate = rawupdate_handler;
-      el.ongotpointercapture = gotcapture_handler;
-      el.onlostpointercapture = lostcapture_handler;
-    }
+//
+//function over_handler(event) {}
+//function enter_handler(event) {}
+//function down_handler(event) {
+//console.log("in down handler");
+//	debugWin.value += '\nin down handler';
+//}
+//function move_handler(event) {}
+//function up_handler(event) {}
+//function cancel_handler(event) {}
+//function out_handler(event) {}
+//function leave_handler(event) {}
+//function rawupdate_handler(event) {}
+//function gotcapture_handler(event) {}
+//function lostcapture_handler(event) {}
+//
+//
+//
+//function init() {
+//      const el = document.getElementById("target");
+//      // Register pointer event handlers
+//      el.onpointerover = over_handler;
+//      el.onpointerenter = enter_handler;
+//      el.onpointerdown = down_handler;
+//      el.onpointermove = move_handler;
+//      el.onpointerup = up_handler;
+//      el.onpointercancel = cancel_handler;
+//      el.onpointerout = out_handler;
+//      el.onpointerleave = leave_handler;
+//      el.onpointerrawupdate = rawupdate_handler;
+//      el.ongotpointercapture = gotcapture_handler;
+//      el.onlostpointercapture = lostcapture_handler;
+//    }
