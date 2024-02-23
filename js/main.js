@@ -7,7 +7,21 @@ var startingStrWidth3 = Number(document.getElementById('mycircle3').getAttribute
 //var debugWin = document.getElementById('logArea');
 
 
+(()=>{
+  const console_log = window.console.log;
+  window.console.log = function(...args){
+    console_log(...args);
+    var textarea = document.getElementById('my_console');
+    if(!textarea) return;
+    args.forEach(arg=>textarea.value += `${JSON.stringify(arg)}\n`);
+		document.getElementById('my_console').scrollTop = document.getElementById('my_console').scrollHeight
+  }
+})();
 
+
+
+console.log("Hello, world");
+console.log([1, 2, 3]);
 
 window.onload = () => {
   'use strict';
