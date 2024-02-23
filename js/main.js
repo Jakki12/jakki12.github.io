@@ -21,9 +21,6 @@ window.onload = () => {
 moveOnRepeat();
 moveOnRepeat2();
 moveOnRepeat3();
-
-	
-//init();
 }
 
 //onMount
@@ -37,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		
 		
 let cir3 = document.getElementById("mycircle3");
-clickAndHold(cir3);
+clickAndHoldTouch(cir3);
 		
 
 });
@@ -148,7 +145,7 @@ function offAnimation3() {
 	let timer = setInterval(function()
 	{
 		let strokeWidth = Number(kreis3.getAttribute("stroke-width"));
-		console.log("current stroke width " + strokeWidth);
+		//console.log("current stroke width " + strokeWidth);
 
 		if (strokeWidth <= startingStrWidth3)
 		{
@@ -322,7 +319,46 @@ function clickAndHold(svgElement){
    svgElement.removeEventListener("mouseup", clearTimer);
    svgElement.removeEventListener("mouseout", clearTimer);
  };
+	
 
+
+};
+
+function clickAndHoldTouch(svgElement){
+ 
+ let timerId;
+ const DURATION = 20;
+
+ //handle when clicking down
+ const onMouseDown = (event) =>
+ {
+	
+	 pressedTime = 0;
+	doOffAnimation = false;
+	 
+  timerId = setInterval(() =>
+  {	
+		//for buttons use: svgElement.click();
+		//for svg-circles, we use: dispatchEvent()....
+    svgElement && svgElement.dispatchEvent(new Event('click')) && pressedTime++;
+  }, DURATION);
+ };
+
+ //stop or clear interval
+ const clearTimer = (event) =>
+ {
+	 timerId && clearInterval(timerId);
+	 clickOrHold = wasClick(pressedTime);
+	 doOffAnimation = true;
+ };
+	
+	
+	
+
+	//handle when MOUSE is clicked -> rufe unsere eigene onMouseDown-Routine auf
+ svgElement.onpointerdown = onMouseDown;
+ svgElement.onpointerup = clearTimer;
+ svgElement.onpointercancel = clearTimer;
 
 };
 
@@ -368,7 +404,6 @@ function clickAndHold(svgElement){
 //function enter_handler(event) {}
 //function down_handler(event) {
 //console.log("in down handler");
-//	debugWin.value += '\nin down handler';
 //}
 //function move_handler(event) {}
 //function up_handler(event) {}
@@ -379,20 +414,22 @@ function clickAndHold(svgElement){
 //function gotcapture_handler(event) {}
 //function lostcapture_handler(event) {}
 //
-//
-//
-//function init() {
-//      const el = document.getElementById("target");
-//      // Register pointer event handlers
-//      el.onpointerover = over_handler;
-//      el.onpointerenter = enter_handler;
-//      el.onpointerdown = down_handler;
-//      el.onpointermove = move_handler;
-//      el.onpointerup = up_handler;
-//      el.onpointercancel = cancel_handler;
-//      el.onpointerout = out_handler;
-//      el.onpointerleave = leave_handler;
-//      el.onpointerrawupdate = rawupdate_handler;
-//      el.ongotpointercapture = gotcapture_handler;
-//      el.onlostpointercapture = lostcapture_handler;
-//    }
+
+
+// pointer funktionen:
+/*
+      const el = document.getElementById("target");
+      // Register pointer event handlers
+      el.onpointerover = over_handler;
+      el.onpointerenter = enter_handler;
+      el.onpointerdown = down_handler; //hab ich
+      el.onpointermove = move_handler;
+      el.onpointerup = up_handler; //hab ich
+      el.onpointercancel = cancel_handler; //hab ich
+      el.onpointerout = out_handler;
+      el.onpointerleave = leave_handler;
+      el.onpointerrawupdate = rawupdate_handler;
+      el.ongotpointercapture = gotcapture_handler;
+      el.onlostpointercapture = lostcapture_handler;
+
+*/
