@@ -6,14 +6,12 @@
 
 
 
-
 //***GLOBAL VARIABLES****************************************************************************
 var startingStrWidth = Number(document.getElementById('mycircle').getAttribute("stroke-width"));
 var startingStrWidth2 = Number(document.getElementById('mycircle2').getAttribute("stroke-width")); 
 var startingStrWidth3 = Number(document.getElementById('mycircle3').getAttribute("stroke-width")); 
 var startingStrWidth4 = Number(document.getElementById('mycircle4').getAttribute("stroke-width")); 
-
-
+console.log(colorpairs);
 //************************************************************************************************
 
 
@@ -50,6 +48,9 @@ moveOnRepeat();
 moveOnRepeat2();
 moveOnRepeat3();
 moveOnRepeat4();
+
+	
+
 
 }
 

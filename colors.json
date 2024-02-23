@@ -1,0 +1,10 @@
+var colorpairs =
+{
+"colorpairs":
+	[
+	{"firstColor":"yellow", "secondColor":"black"},
+  {"firstColor":"red", "secondColor":"white"},
+  {"firstColor":"blue", "secondColor":"pink"},
+	{"firstColor":"gold", "secondColor":"lavender"}
+	]
+}
