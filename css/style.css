@@ -11,6 +11,7 @@ html,
   padding: 0;
   width: 100%;
   align-content: center
+	touch-action: none
 }
 
 .mytxt {
