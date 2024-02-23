@@ -3,6 +3,8 @@
 var startingStrWidth3 = Number(document.getElementById('mycircle3').getAttribute("stroke-width")); 
 
 
+//debug window
+var debugWin = document.getElementById('logArea');
 
 
 
@@ -20,6 +22,8 @@ moveOnRepeat();
 moveOnRepeat2();
 moveOnRepeat3();
 
+	
+init();
 }
 
 //onMount
@@ -301,7 +305,7 @@ function clickAndHold(svgElement){
  };
 	
 
- //handle when mouse is clicked -> rufe unsere eigene onMouseDown-Routine auf
+	//handle when MOUSE is clicked -> rufe unsere eigene onMouseDown-Routine auf
  svgElement.addEventListener("mousedown", onMouseDown);
  //handle when mouse is raised ->rufe unsere eigene clearTimer-Routine auf
  svgElement.addEventListener("mouseup", clearTimer);
@@ -316,7 +320,18 @@ function clickAndHold(svgElement){
    svgElement.removeEventListener("mouseup", clearTimer);
    svgElement.removeEventListener("mouseout", clearTimer);
  };
+	
+	
+	
+	
+	// Register touch event handlers
+svgElement.addEventListener("touchstart", process_touchstart, false);
+svgElement.addEventListener("touchmove", process_touchmove, false);
+svgElement.addEventListener("touchcancel", process_touchcancel, false);
+svgElement.addEventListener("touchend", process_touchend, false);
+
 };
+
 
 
 
@@ -351,3 +366,39 @@ function clickAndHold(svgElement){
       };
  
 
+
+
+//learning pointer touch
+
+function over_handler(event) {}
+function enter_handler(event) {}
+function down_handler(event) {
+console.log("in down handler");
+	debugWin.value += '\nin down handler';
+}
+function move_handler(event) {}
+function up_handler(event) {}
+function cancel_handler(event) {}
+function out_handler(event) {}
+function leave_handler(event) {}
+function rawupdate_handler(event) {}
+function gotcapture_handler(event) {}
+function lostcapture_handler(event) {}
+
+
+
+function init() {
+      const el = document.getElementById("target");
+      // Register pointer event handlers
+      el.onpointerover = over_handler;
+      el.onpointerenter = enter_handler;
+      el.onpointerdown = down_handler;
+      el.onpointermove = move_handler;
+      el.onpointerup = up_handler;
+      el.onpointercancel = cancel_handler;
+      el.onpointerout = out_handler;
+      el.onpointerleave = leave_handler;
+      el.onpointerrawupdate = rawupdate_handler;
+      el.ongotpointercapture = gotcapture_handler;
+      el.onlostpointercapture = lostcapture_handler;
+    }

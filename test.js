@@ -5,3 +5,6 @@ let draw = new CanvasRenderingContext2D;
 
 le
 
+
+
+va   
