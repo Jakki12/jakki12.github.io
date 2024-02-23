@@ -1,6 +1,6 @@
 
 //TODO
-//smarthphone auto gestures blockierne
+//smarthphone auto gestures blockierne, auf jeden fall zoom, text markierungen 
 //portrait oder landscape oder beiedes? --> anzahl circles
 //onAnimation() stroke width dynamisch
 
@@ -11,6 +11,8 @@
 var startingStrWidth = Number(document.getElementById('mycircle').getAttribute("stroke-width"));
 var startingStrWidth2 = Number(document.getElementById('mycircle2').getAttribute("stroke-width")); 
 var startingStrWidth3 = Number(document.getElementById('mycircle3').getAttribute("stroke-width")); 
+var startingStrWidth4 = Number(document.getElementById('mycircle4').getAttribute("stroke-width")); 
+
 
 //************************************************************************************************
 
@@ -47,6 +49,8 @@ window.onload = () => {
 moveOnRepeat();
 moveOnRepeat2();
 moveOnRepeat3();
+moveOnRepeat4();
+
 }
 
 //onMount
@@ -61,10 +65,12 @@ document.addEventListener("DOMContentLoaded", function () {
 let cir = document.getElementById("mycircle");
 let cir2 = document.getElementById("mycircle2");
 let cir3 = document.getElementById("mycircle3");
+let cir4 = document.getElementById("mycircle4");
 
 clickAndHoldTouch(cir);
 clickAndHoldTouch2(cir2);
 clickAndHoldTouch3(cir3);
+clickAndHoldTouch4(cir4);
 });
 //************************************************************************************************
 
@@ -234,7 +240,6 @@ function moveit() {
     document.getElementById("mycircle").cx.baseVal.value = xpos;
     
 };
-
 
 //This function clicks a dedicated btn-element programmatically as long as it is pressed.
 //By this, the HTML-onClick() function will continously be fired as long as the element is held.
@@ -542,6 +547,123 @@ function clickAndHoldTouch3(svgElement){
 //******CIRCLE 3*******//
 
 
+
+
+
+//******CIRCLE 4*******//
+function onCircleClick4(){
+	
+	if(!doOffAnimation4)
+	{
+		onAnimation4(100);
+	}
+	else
+	{
+		offAnimation4();	
+	}
+}
+function onAnimation4(maxStrokeWidth){
+	console.log("in on animation4");
+	let cir4 = document.getElementById('mycircle4'); 
+
+	let strWidth = Number(cir4.getAttribute("stroke-width"));
+	if (strWidth <= maxStrokeWidth) //todo: maxStrokeWidth dynamisch festlegen mit anfänglicher stroke-width
+	{
+		cir4.setAttribute("stroke-width", strWidth+3);
+		//were still animating
+		return true;
+	}
+	else
+	{
+		//on Animation has finished
+		return false;	
+	}
+}
+function offAnimation4() {
+	console.log("in off animation4");
+	
+	let kreis4 = document.getElementById('mycircle4'); 
+	let timer = setInterval(function()
+	{
+		let strokeWidth = Number(kreis4.getAttribute("stroke-width"));
+		//console.log("current stroke width " + strokeWidth);
+
+		if (strokeWidth <= startingStrWidth4)
+		{
+			//console.log("stop");
+			clearInterval(timer);
+			return;
+		}
+		else
+		{
+			kreis4.setAttribute("stroke-width", strokeWidth-3);
+		}
+	}, 20);	
+}
+function playTone4(){
+
+}
+function moveOnRepeat4() {
+  setInterval(moveit4, 20);
+}
+function moveit4() {
+	var circle_elem = document.getElementById("mycircle4");
+  var xpos = document.getElementById("mycircle4").cx.baseVal.value;
+  var circle_width = circle_elem.getBoundingClientRect().width;
+    
+  if(!elementRightBorderCheck(circle_elem))
+  {
+  	xpos = -circle_width;      
+  }
+  else
+  {
+  	xpos += 2.5;   
+  } 
+  
+	document.getElementById("mycircle4").cx.baseVal.value = xpos;  
+};
+
+var pressedTime4 = 0;
+var clickOrHold4 = 0;
+var doOffAnimation4 = false;
+function clickAndHoldTouch4(svgElement){
+ 
+ let timerId;
+ const DURATION = 20;
+
+ //handle when clicking down
+ const onMouseDown = (event) =>
+ {
+	
+	pressedTime4 = 0;
+	doOffAnimation4 = false;
+	 
+  timerId = setInterval(() =>
+  {	
+		//for buttons use: svgElement.click();
+		//for svg-circles, we use: dispatchEvent()....
+    svgElement && svgElement.dispatchEvent(new Event('click')) && pressedTime4++;
+  }, DURATION);
+ };
+
+ //stop or clear interval
+ const clearTimer = (event) =>
+ {
+	 timerId && clearInterval(timerId);
+	 clickOrHold4 = wasClick(pressedTime4);
+	 doOffAnimation4 = true;
+ };
+	
+	
+	//handle when MOUSE is clicked/screen is touched -> rufe unsere eigene onMouseDown-Routine auf
+ svgElement.onpointerdown = onMouseDown;
+ svgElement.onpointerup = clearTimer;
+ svgElement.onpointercancel = clearTimer;
+ svgElement.onpointerout = clearTimer;
+ svgElement.onpointerleave = clearTimer;
+ svgElement.onlostpointercapture = clearTimer;
+};
+//******CIRCLE 4*******//
 
 //learning pointer touch
 //
