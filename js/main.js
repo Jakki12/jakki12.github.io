@@ -6,13 +6,16 @@
 
 
 
-
-
 //***GLOBAL VARIABLES****************************************************************************
 var startingStrWidth = Number(document.getElementById('mycircle').getAttribute("stroke-width"));
 var startingStrWidth2 = Number(document.getElementById('mycircle2').getAttribute("stroke-width")); 
 var startingStrWidth3 = Number(document.getElementById('mycircle3').getAttribute("stroke-width")); 
 var startingStrWidth4 = Number(document.getElementById('mycircle4').getAttribute("stroke-width")); 
+
+var minCircleSize = 40;
+var maxCircleSize = 110;
+var minStrokeWidth = 20;
+var maxStrokeWidth = 60;
 //************************************************************************************************
 
 
@@ -71,6 +74,15 @@ clickAndHoldTouch(cir);
 clickAndHoldTouch2(cir2);
 clickAndHoldTouch3(cir3);
 clickAndHoldTouch4(cir4);
+	
+changeStyle(cir);
+changeStyle(cir2);
+changeStyle(cir3);
+changeStyle(cir4);
+
+
+
+	
 });
 //************************************************************************************************
 
@@ -157,31 +169,57 @@ function clickAndHold(svgElement){
 
 function changeStyle(svgElement){
 
-	console.log("in function change Color");
-	console.log(svgElement);
-	
-	let newRadius = 10;
-	let newStrokeWidth = 10;
-	
-	
-	console.log(colorCollection.colorpairs.length);
-	
 
-	let newFillColor = "blue";
-	let newStrokeColor = "red";
+	//new circle size and radius with randomness
+	let newRadius = generateRandomIntegerInRange(minCircleSize, maxCircleSize);
+	let newStrokeWidth = generateRandomIntegerInRange(minStrokeWidth, maxStrokeWidth);
+		
+	//get new color with randomness
+	//
+	//which color pair to get? === which index in color collection? 
+	let newColorIndex = generateRandomIntegerInRange(0, (colorCollection.colorpairs.length-1));
+
+	//grab color pairs from collection
+	let newColorA = colorCollection.colorpairs[newColorIndex].firstColor;
+	let newColorB = colorCollection.colorpairs[newColorIndex].secondColor;
+
+	//decide randomly which color is fill and which is stroke	
+	let hueHott = generateRandomIntegerInRange(0, 1);
 	
+	let newFillColor;
+	let newStrokeColor;
 	
+	switch (hueHott)
+	{
+		case 0:
+			newFillColor = newColorA;
+			newStrokeColor = newColorB;
+			break;
+		case 1: 
+			newFillColor = newColorB;
+			newStrokeColor = newColorA;
+			break;
+		default:
+			console.log("issue in own function changeStyle");
+	}
+	
+	//set the new attributes to the circle
 	svgElement.setAttribute("r", newRadius);
 	svgElement.setAttribute("stroke-width", newStrokeWidth);
 	svgElement.setAttribute("fill", newFillColor);
 	svgElement.setAttribute("stroke", newStrokeColor);
-
-
-//	<circle id="mycircle" cx="704" cy="100" r="65" stroke="black" stroke-width="45" fill="yellow" onclick="onCircleClick()"></circle>
-//	console.log(colorpairs);
-
-
 }
+
+//Generate a number between 0 and max, including max
+function generateRandomInteger(max) {
+	return Math.floor(Math.random() * max) + 1;
+}
+
+//Generate a random number between min and max, including both min and max
+function generateRandomIntegerInRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+	
 //************************************************************************************************
 
 
@@ -389,7 +427,8 @@ function moveit2() {
     
     if(!elementRightBorderCheck(circle_elem))
     {
-        xpos = -circle_width;      
+        xpos = -circle_width;
+			  changeStyle(circle_elem);
     }
     else
     {
@@ -524,7 +563,8 @@ function moveit3() {
     
   if(!elementRightBorderCheck(circle_elem))
   {
-  	xpos = -circle_width;      
+  	xpos = -circle_width;
+		changeStyle(circle_elem);
   }
   else
   {
@@ -645,7 +685,8 @@ function moveit4() {
     
   if(!elementRightBorderCheck(circle_elem))
   {
-  	xpos = -circle_width;      
+  	xpos = -circle_width;
+		changeStyle(circle_elem);
   }
   else
   {

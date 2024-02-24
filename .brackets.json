@@ -1,0 +1,8 @@
+{
+	"showCodeHints": true,
+   "codehint.JSHints": true,
+   "**.js": { 
+	 		"insertHintOnTab": true,
+    	"scrollPastEnd": true
+   }
+}
