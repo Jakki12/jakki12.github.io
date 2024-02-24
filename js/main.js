@@ -6,12 +6,13 @@
 
 
 
+
+
 //***GLOBAL VARIABLES****************************************************************************
 var startingStrWidth = Number(document.getElementById('mycircle').getAttribute("stroke-width"));
 var startingStrWidth2 = Number(document.getElementById('mycircle2').getAttribute("stroke-width")); 
 var startingStrWidth3 = Number(document.getElementById('mycircle3').getAttribute("stroke-width")); 
 var startingStrWidth4 = Number(document.getElementById('mycircle4').getAttribute("stroke-width")); 
-console.log(colorpairs);
 //************************************************************************************************
 
 
@@ -33,11 +34,9 @@ console.log("Hello=)");
 
 
 
-
 //***ON LOAD STUFF********************************************************************************
 window.onload = () => {
   'use strict';
-
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker
@@ -155,6 +154,34 @@ function clickAndHold(svgElement){
 
 
 }; //deprecated
+
+function changeStyle(svgElement){
+
+	console.log("in function change Color");
+	console.log(svgElement);
+	
+	let newRadius = 10;
+	let newStrokeWidth = 10;
+	
+	
+	console.log(colorCollection.colorpairs.length);
+	
+
+	let newFillColor = "blue";
+	let newStrokeColor = "red";
+	
+	
+	svgElement.setAttribute("r", newRadius);
+	svgElement.setAttribute("stroke-width", newStrokeWidth);
+	svgElement.setAttribute("fill", newFillColor);
+	svgElement.setAttribute("stroke", newStrokeColor);
+
+
+//	<circle id="mycircle" cx="704" cy="100" r="65" stroke="black" stroke-width="45" fill="yellow" onclick="onCircleClick()"></circle>
+//	console.log(colorpairs);
+
+
+}
 //************************************************************************************************
 
 
@@ -224,20 +251,24 @@ function moveOnRepeat() {
   intervalID = setInterval(moveit, 30);
 }
 function moveit() {
-    var circle_elem = document.getElementById("mycircle");
+    //every x ms do:
+	  var circle_elem = document.getElementById("mycircle");
     var xpos = document.getElementById("mycircle").cx.baseVal.value;
     var circle_width = circle_elem.getBoundingClientRect().width;
     
-    
+    //check if we're outside on the right
     if(!elementRightBorderCheck(circle_elem))
-    {
-        xpos = -circle_width;      
+    {  
+			//reset circle position to outside-left  
+			xpos = -circle_width;
+			changeStyle(circle_elem);
     }
     else
     {
+				//move on
         xpos += 2;   
     }
-    
+    //set new position
     document.getElementById("mycircle").cx.baseVal.value = xpos;
     
 };
