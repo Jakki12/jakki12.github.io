@@ -142,7 +142,6 @@ function clickAndHold(svgElement){
    timerId && clearInterval(timerId);
 	 clickOrHold = wasClick(pressedTime);
 	 doOffAnimation = true;
-	 console.log(clickOrHold);
 	 
  };
 	
@@ -226,20 +225,32 @@ function generateRandomIntegerInRange(min, max) {
 
 //***CIRCLE SPECIFIC STUFF************************************************************************
 //******CIRCLE 1*******//
+
+let isPlaying = false;
+
+//this function is fired continously by clickAndTouch()-function
 function onCircleClick(){
-    console.log("first Circle clicked");
-		if(!doOffAnimation)
+		
+	if(!isPlaying)
+	{
+		playTone();
+		isPlaying = true;
+	}
+	
+	if(!doOffAnimation)
 	{
 		onAnimation(100);
 	}
 	else
 	{
 		offAnimation();	
+		isPlaying = false;
 	}
     
 }
 function playTone(){
-    const synth = new Tone.Synth().toDestination();
+    console.log("play");
+		const synth = new Tone.Synth().toDestination();
     if (Tone.context.state !== "running")
     {
     Tone.start();
