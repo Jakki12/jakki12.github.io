@@ -6,6 +6,7 @@
 
 
 
+
 //***GLOBAL VARIABLES****************************************************************************
 var startingStrWidth = Number(document.getElementById('mycircle').getAttribute("stroke-width"));
 var startingStrWidth2 = Number(document.getElementById('mycircle2').getAttribute("stroke-width")); 
@@ -21,6 +22,7 @@ var maxStrokeWidth = 60;
 
 
 //***DEBUG CONSOLE********************************************************************************
+/*
 (()=>{
   const console_log = window.console.log;
   window.console.log = function(...args){
@@ -31,6 +33,7 @@ var maxStrokeWidth = 60;
 		document.getElementById('my_console').scrollTop = document.getElementById('my_console').scrollHeight
   }
 })();
+*/
 
 console.log("Hello=)");
 //************************************************************************************************
@@ -79,147 +82,12 @@ changeStyle(cir);
 changeStyle(cir2);
 changeStyle(cir3);
 changeStyle(cir4);
-
-
-
-	
 });
 //************************************************************************************************
 
  
 
-//***HELPER FUNCTIONS*****************************************************************************
 
-//check if touch was click oder hold
-function wasClick(TimeThatCircleWasPressed)
-{
-	if(TimeThatCircleWasPressed <= 10)
-	{
-	return true;
-	}
-	else
-	{
-	return false;
-	}
-}
-function elementRightBorderCheck(element) {
-
-    var bounding = element.getBoundingClientRect();
-    
-    var elemWidth = bounding.width;
-  
-
-    if (bounding.right <= ((window.innerWidth+elemWidth) || (document.documentElement.clientWidth+elemWidth)))
-    {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function clickAndHold(svgElement){
- 
- let timerId;
- const DURATION = 20;
-
- //handle when clicking down
- const onMouseDown = () =>
- {
-	pressedTime = 0;
-	doOffAnimation = false;
-	 
-  timerId = setInterval(() =>
-  {	
-		//for buttons use: svgElement.click();
-		//for svg-circles, we use: dispatchEvent()....
-    svgElement && svgElement.dispatchEvent(new Event('click')) && pressedTime++;
-  }, DURATION);
- };
-
- //stop or clear interval
- const clearTimer = () =>
- {
-   timerId && clearInterval(timerId);
-	 clickOrHold = wasClick(pressedTime);
-	 doOffAnimation = true;
-	 
- };
-	
-
-	//handle when MOUSE is clicked -> rufe unsere eigene onMouseDown-Routine auf
- svgElement.addEventListener("mousedown", onMouseDown);
- //handle when mouse is raised ->rufe unsere eigene clearTimer-Routine auf
- svgElement.addEventListener("mouseup", clearTimer);
- //handle mouse leaving the clicked button
- svgElement.addEventListener("mouseout", clearTimer);
-
- // a callback function to remove listeners useful in libs like react
- // when component or element is unmounted
- return () =>
- {
-   svgElement.removeEventListener("mousedown", onMouseDown);
-   svgElement.removeEventListener("mouseup", clearTimer);
-   svgElement.removeEventListener("mouseout", clearTimer);
- };
-	
-
-
-}; //deprecated
-
-function changeStyle(svgElement){
-
-
-	//new circle size and radius with randomness
-	let newRadius = generateRandomIntegerInRange(minCircleSize, maxCircleSize);
-	let newStrokeWidth = generateRandomIntegerInRange(minStrokeWidth, maxStrokeWidth);
-		
-	//get new color with randomness
-	//
-	//which color pair to get? === which index in color collection? 
-	let newColorIndex = generateRandomIntegerInRange(0, (colorCollection.colorpairs.length-1));
-
-	//grab color pairs from collection
-	let newColorA = colorCollection.colorpairs[newColorIndex].firstColor;
-	let newColorB = colorCollection.colorpairs[newColorIndex].secondColor;
-
-	//decide randomly which color is fill and which is stroke	
-	let hueHott = generateRandomIntegerInRange(0, 1);
-	
-	let newFillColor;
-	let newStrokeColor;
-	
-	switch (hueHott)
-	{
-		case 0:
-			newFillColor = newColorA;
-			newStrokeColor = newColorB;
-			break;
-		case 1: 
-			newFillColor = newColorB;
-			newStrokeColor = newColorA;
-			break;
-		default:
-			console.log("issue in own function changeStyle");
-	}
-	
-	//set the new attributes to the circle
-	svgElement.setAttribute("r", newRadius);
-	svgElement.setAttribute("stroke-width", newStrokeWidth);
-	svgElement.setAttribute("fill", newFillColor);
-	svgElement.setAttribute("stroke", newStrokeColor);
-}
-
-//Generate a number between 0 and max, including max
-function generateRandomInteger(max) {
-	return Math.floor(Math.random() * max) + 1;
-}
-
-//Generate a random number between min and max, including both min and max
-function generateRandomIntegerInRange(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-	
-//************************************************************************************************
 
 
 
@@ -231,32 +99,20 @@ let isPlaying = false;
 //this function is fired continously by clickAndTouch()-function
 function onCircleClick(){
 		
-	if(!isPlaying)
-	{
-		playTone();
-		isPlaying = true;
-	}
 	
 	if(!doOffAnimation)
 	{
 		onAnimation(100);
+		
 	}
 	else
 	{
-		offAnimation();	
-		isPlaying = false;
+		playTone();
+		offAnimation();
 	}
     
 }
-function playTone(){
-    console.log("play");
-		const synth = new Tone.Synth().toDestination();
-    if (Tone.context.state !== "running")
-    {
-    Tone.start();
-    }
-    synth.triggerAttackRelease("C4", "8n");   
-}
+
 function onAnimation(maxStrokeWidth){
 	console.log("in on animation1");
 	let cir = document.getElementById('mycircle'); 
@@ -365,6 +221,7 @@ function clickAndHoldTouch(svgElement){
  svgElement.onlostpointercapture = clearTimer;
 
 };
+
 //******CIRCLE 1*******//
 
 
@@ -379,18 +236,12 @@ function onCircleClick2(){
 	}
 	else
 	{
+		playTone();
 		offAnimation2();	
 	}
 
 }
-function playTone2(){
-    var synth = new Tone.Synth().toDestination();
-    if (Tone.context.state !== "running")
-    {
-    Tone.start();
-    }
-    synth.triggerAttackRelease("C5", "16n"); 
-}
+
 function onAnimation2(maxStrokeWidth){
 	console.log("in on animation2");
 	let cir2 = document.getElementById('mycircle2'); 
@@ -504,15 +355,7 @@ function onCircleClick3(){
 	}
 	else
 	{
-		
-		//playTone je nach farbe,geschwindikeit was auch immer kurz oder lang oder hoch oder tief
-		//TODO
-		
-		//entscheide je nach press oder click, ob delay oder nicht oder irgendwein anderer effekt
-		//TODO
-		
-		
-		//mache off animation ebenfalls je nach delay,reverb, press time was auch immer
+		playTone();
 		offAnimation3();
 		
 	}
@@ -554,15 +397,6 @@ function offAnimation3() {
 			kreis3.setAttribute("stroke-width", strokeWidth-3);
 		}
 	}, 20);	
-}
-function playTone3(){
-	var synth = new Tone.Synth().toDestination();
-  
-	if (Tone.context.state !== "running")
-  {
-    Tone.start();
-  }
-  synth.triggerAttackRelease("E4", "4n"); 
 }
 function moveOnRepeat3() {
   setInterval(moveit3, 13);
@@ -642,6 +476,7 @@ function onCircleClick4(){
 	}
 	else
 	{
+		playTone();
 		offAnimation4();	
 	}
 }
@@ -682,9 +517,6 @@ function offAnimation4() {
 			kreis4.setAttribute("stroke-width", strokeWidth-3);
 		}
 	}, 20);	
-}
-function playTone4(){
-
 }
 function moveOnRepeat4() {
   setInterval(moveit4, 20);
