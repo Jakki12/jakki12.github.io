@@ -2,9 +2,17 @@ var colorCollection =
 {
 "colorpairs":
 	[
-	{"firstColor":"yellow", "secondColor":"black"},
-  {"firstColor":"red", "secondColor":"white"},
-  {"firstColor":"blue", "secondColor":"pink"},
-	{"firstColor":"gold", "secondColor":"lavender"}
+	{"firstColor":"yellow", "secondColor":"black"}, //heftig
+  {"firstColor":"red", "secondColor":"white"}, //doll
+	{"firstColor":"gold", "secondColor":"lavender"} //soft
+	],
+	"colorMoodPairs":
+	[
+		{"color": "yellow", "mood": "friendly"},
+		{"color": "black", "mood": "dark"},
+		{"color": "red", "mood": "alarming"},
+		{"color": "white", "mood": "nothing"},
+		{"color": "gold", "mood": "nice"},
+	  {"color": "lavender", "mood": "soft"},
 	]
 }
