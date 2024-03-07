@@ -3,18 +3,16 @@ var pitchCollection =
 {
 "moodPitchPairs":
 	[
-	{"mood":"friendly", "pitches":["G#5"]},
-	{"mood":"dark", "pitches":["F5"]},
-	{"mood":"alarming", "pitches":["C#5","F#5"]},
-	{"mood":"nothing", "pitches":["G#5"]},
-	{"mood":"nice", "pitches":["C5"]},
-	{"mood":"soft", "pitches":["A#5"]}
+	{"mood":"friendly", "pitches":["G#4"]},
+	{"mood":"dark", "pitches":["F4"]},
+	{"mood":"alarming", "pitches":["C#4","F#4"]},
+	{"mood":"nothing", "pitches":["G#4"]},
+	{"mood":"nice", "pitches":["C4"]},
+	{"mood":"soft", "pitches":["A#4"]}
 	]
 };
 
 
-const mySynths = ["jakob", "laura"];
-const pitchTypes = ["G#4"];
 const noteTypes = ["4n", "8n", "16n"];
 const delayTimes = ["4n", "8n", "16n"];
 
@@ -26,23 +24,19 @@ Tone.context.lookAhead = 0;
 console.log("lookAhead: " + Tone.context.lookAhead);
 
 
-
-
-
-
 var mySynth = new Tone.PolySynth(Tone.Synth);
-mySynth.options.envelope.decay = 1;
+mySynth.options.envelope.decay = 0.5;
 mySynth.options.envelope.release = 1;
 mySynth.options.envelope.attack = 0.1;
-mySynth.options.envelope.sustain = 0.5;
+mySynth.options.envelope.sustain = 0.3;
 mySynth.options.oscillator.type = "sine";
 
 
 
   //// AUDIO MASTER
-  var filter1 = new Tone.Filter(1000, "highpass", -24);
+  var filter1 = new Tone.Filter(800, "highpass", -12);
   filter1.Q.value = 0.3;
-  filter1.gain.value = 0.35;
+  filter1.gain.value = 0.6;
 
 
 //mySynth.envelope.decay.value = 1;
@@ -62,7 +56,8 @@ delay.feedback.value = 0.9;
 delay.wet.value = 0.3;
 console.log(delay);
 
-mySynth.chain(delay,filter1, Tone.Master);
+mySynth.chain(reverb, delay,filter1, Tone.Master);
+console.log(Tone.Master);
 
 
 function getPitchFromMood(someMood){
