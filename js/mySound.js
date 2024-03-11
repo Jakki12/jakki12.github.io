@@ -4,11 +4,11 @@ var pitchCollection =
 "moodPitchPairs":
 	[
 	{"mood":"friendly", "pitches":["G#4"]},
-	{"mood":"dark", "pitches":["F4"]},
-	{"mood":"alarming", "pitches":["C#4","F#4"]},
-	{"mood":"nothing", "pitches":["G#4"]},
-	{"mood":"nice", "pitches":["C4"]},
-	{"mood":"soft", "pitches":["A#4"]}
+	{"mood":"dark", "pitches":["G#3"]},
+	{"mood":"alarming", "pitches":["C#5","F#4", "B4"]},
+	{"mood":"nothing", "pitches":["G#3",]},
+	{"mood":"nice", "pitches":["C3"]},
+	{"mood":"soft", "pitches":["A#3"]}
 	]
 };
 
@@ -35,8 +35,15 @@ mySynth.options.oscillator.type = "sine";
 
   //// AUDIO MASTER
   var filter1 = new Tone.Filter(800, "highpass", -12);
-  filter1.Q.value = 0.3;
-  filter1.gain.value = 0.6;
+  filter1.Q.value = 0.5;
+  filter1.gain.value = 2;
+	
+	
+	var filterHighShelf = new Tone.Filter(5000, "highshelf");
+	filterHighShelf.gain.value = 10;
+	filterHighShelf.Q.value = 10;
+	console.log(filterHighShelf);
+	
 
 
 //mySynth.envelope.decay.value = 1;
@@ -50,14 +57,16 @@ reverb.decay = 1;
 reverb.dry = 0.5;
 reverb.wet = 0.5;
 
+
 const delay = new Tone.FeedbackDelay();
 delay.delayTime.value = "4n";
 delay.feedback.value = 0.9;
 delay.wet.value = 0.3;
-console.log(delay);
 
-mySynth.chain(reverb, delay,filter1, Tone.Master);
-console.log(Tone.Master);
+
+var vol = new Tone.Volume(12);
+mySynth.chain(vol, reverb, delay,filter1, filterHighShelf, Tone.Master);
+
 
 
 function getPitchFromMood(someMood){

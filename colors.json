@@ -8,7 +8,7 @@ var colorCollection =
 	],
 	"colorMoodPairs":
 	[
-		{"color": "yellow", "mood": "friendly"},
+		{"color": "yellow", "mood": "alarming"},
 		{"color": "black", "mood": "dark"},
 		{"color": "red", "mood": "alarming"},
 		{"color": "white", "mood": "nothing"},
